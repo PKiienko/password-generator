@@ -64,9 +64,9 @@
 }
 
 .btn {
-  width: 15rem;
+  width: 10rem;
   height: 3rem;
-  margin: 1rem 0rem;
+  margin: 0.5rem;
   background-color: #b3b3b3;
   border: 0.15rem solid white;
   border-radius: 1rem;
@@ -80,5 +80,5 @@
 }
 
 .btn:active {
-  width: 14.5rem;
+  background-color: #555555;
 }

@@ -9,6 +9,11 @@ const App = () => {
   const [includeNumbers, setIncludeNumbers] = useState(false);
   const [includeSymbols, setIncludeSymbols] = useState(false);
 
+  const copyPassword = async (e) => {
+    e.preventDefault();
+    await navigator.clipboard.writeText(textPassword);
+  }
+
   const passwordGenerating = (e) => {
     e.preventDefault();
     const lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
@@ -55,8 +60,12 @@ const App = () => {
             <input type="checkbox" onClick={() => { setIncludeSymbols(!includeSymbols) }} />
             <h4>Include Symbols</h4>
           </div>
-          <button className='btn' type='submit' onClick={passwordGenerating}>Generate</button>
+          <div>
+            <button className='btn' type='submit' onClick={passwordGenerating}>Generate</button>
+            <button className='btn' onClick={copyPassword}>Copy</button>
+          </div>
         </form>
+
       </div>
     </div>
   );
