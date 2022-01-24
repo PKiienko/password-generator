@@ -1,23 +1,63 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
-function App() {
+const App = () => {
+
+  const [textPassword, setTextPassword] = useState('Your password here');
+  const [passwordLength, setPasswordLength] = useState('10');
+  const [includeUppercase, setIncludeUppercase] = useState(false);
+  const [includeNumbers, setIncludeNumbers] = useState(false);
+  const [includeSymbols, setIncludeSymbols] = useState(false);
+
+  const passwordGenerating = (e) => {
+    e.preventDefault();
+    const lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
+    const upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numbers = "1234567890"
+    const symbols = "!@#$%^&*()-+[]{}<>/?";
+
+    let charset = lowerCaseLetters;
+    charset = includeUppercase ? charset + upperCaseLetters : charset;
+    charset = includeNumbers ? charset + numbers : charset;
+    charset = includeSymbols ? charset + symbols : charset;
+    const password = [];
+
+    for (let i = 0; i < passwordLength; i++) {
+      let characterIndex = Math.floor(Math.random() * charset.length)
+      password.push(charset[characterIndex]);
+    }
+    setTextPassword(password.join(''));
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='container'>
+        <section className='password-header'>
+          <h1>Password Generator</h1>
+          <h2>{textPassword}</h2>
+        </section>
+
+        <form className='checkboxes'>
+          <div className='length-block'>
+            <input type="range" min='8' max='50' value={passwordLength} onChange={(e) => setPasswordLength(e.target.value)} />
+            <input className='length-input' type="number" min='8' max='50' value={passwordLength} onChange={(e) => setPasswordLength(e.target.value)} />
+            <h4>Length</h4>
+          </div>
+          <div className='uppercase-block'>
+            <input type="checkbox" onClick={() => { setIncludeUppercase(!includeUppercase) }} />
+            <h4>Include Uppercase</h4>
+          </div>
+          <div className='numbers-block'>
+            <input type="checkbox" onClick={() => { setIncludeNumbers(!includeNumbers) }} />
+            <h4>Include Numbers</h4>
+          </div>
+          <div className='symbols-block'>
+            <input type="checkbox" onClick={() => { setIncludeSymbols(!includeSymbols) }} />
+            <h4>Include Symbols</h4>
+          </div>
+          <button className='btn' type='submit' onClick={passwordGenerating}>Generate</button>
+        </form>
+      </div>
     </div>
   );
 }
